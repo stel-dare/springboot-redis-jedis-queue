@@ -18,6 +18,6 @@ public class RedisController {
 	@GetMapping
 	public String sendDataToRedisQueue(@RequestParam("redis") String input) {
 		sender.sendDataToRedisQueue(input);
-		return "successfully sent";
+		return "Your message was recieved";
 	}
 }

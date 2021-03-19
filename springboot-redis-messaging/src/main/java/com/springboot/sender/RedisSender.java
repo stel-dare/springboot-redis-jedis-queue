@@ -6,20 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 @Service
 public class RedisSender {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RedisSender.class);
 
-	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
-
-	@Autowired
-	private ChannelTopic topic;
+//	@Autowired
+//	private RedisTemplate<String, String> redisTemplate;
+//
+//	@Autowired
+//	private ChannelTopic topic;
 
 	public void sendDataToRedisQueue(String input) {
-		redisTemplate.convertAndSend(topic.getTopic(), input);
-		LOGGER.info("Data - " + input + " sent through Redis Topic - " + topic.getTopic());
+//		redisTemplate.convertAndSend(topic.getTopic(), input);
+		Jedis jedis = new Jedis("localhost",6379);
+		jedis.rpush("messageTest",input);
+		LOGGER.info("Data - " + input + " sent through Redis Topic - " );
 	}
 }
